@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Download the Apache Archiva bundle if it is not already present
-if [ ! -f apache-archiva-2.0.1-bin.tar.gz ]; then
-	curl -O http://apache.uib.no/archiva/2.0.1/binaries/apache-archiva-2.0.1-bin.tar.gz
+if [ ! -f apache-archiva-2.2.3-bin.tar.gz ]; then
+	curl -O http://apache.uib.no/archiva/2.2.3/binaries/apache-archiva-2.2.3-bin.tar.gz
 fi
 
 # Clean up from last round
@@ -11,10 +11,10 @@ rm -f Archiva-x64-*-bin.spk
 rm -f package.tgz
 
 # Prepare to modify the Archive distribution
-tar -xzf apache-archiva-2.0.1-bin.tar.gz
+tar -xzf apache-archiva-2.2.3-bin.tar.gz
 
 # Change the folder name to something more useful when called from the scripts
-mv apache-archiva-2.0.1 src
+mv apache-archiva-2.2.3 src
 
 # Remove working folders, we'll move and recreate them
 rmdir src/logs
@@ -39,11 +39,11 @@ fi
 buildNumber=$[$buildNumber+1]
 
 # Write the version number
-version=2.0.1-$buildNumber
+version=2.2.3-$buildNumber
 sed 's/VERSION/'$version'/g' INFO.template > INFO
 
 # Create the Synology package
-COPYFILE_DISABLE=1 tar -cpzf Archiva-x64-2.0.1-$buildNumber-bin.spk scripts WIZARD_UIFILES INFO package.tgz
+COPYFILE_DISABLE=1 tar -cpzf Archiva-x64-2.2.3-$buildNumber-bin.spk scripts WIZARD_UIFILES INFO package.tgz
 
 #Bump the build number
 if [ "$?" -eq "0" ]; then
